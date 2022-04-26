@@ -52,29 +52,40 @@ bookLog()
 
 
 function newBooksInLibrary() {
-    let latestBook = new Book(title.value, author.value, pages.value)
+    if (title.value == '' || author.value == '' || pages.value == '') {
+        return false
+    }
+    else {
+        let latestBook = new Book(title.value, author.value, pages.value)
+        newBooks.push(latestBook)
+        console.log(newBooks)
+        return true
+    }
 
-    newBooks.push(latestBook)
+
 }
 
 function newBookLog() {
-    let rows = document.createElement('tr')
-    table.appendChild(rows)
-    for (let i = 0; i <= 2; i++) {
-        let cell = document.createElement('td')
-        cell.textContent = newBooks[newBooks.length - 1]['info'][i]
-        rows.appendChild(cell)
+    if (newBooksInLibrary() == true) {
+        let rows = document.createElement('tr')
+        table.appendChild(rows)
+        for (let i = 0; i <= 2; i++) {
+            let cell = document.createElement('td')
+            cell.textContent = newBooks[newBooks.length - 1]['info'][i]
+            rows.appendChild(cell)
+        }
+    
+        let deleteCell = document.createElement('td')
+        deleteCell.textContent = 'Delete'
+        rows.appendChild(deleteCell)
+    
+        function removeNewBook() {
+            table.removeChild(rows)
+        }
+        deleteCell.addEventListener('click', removeNewBook)
     }
 
-    let deleteCell = document.createElement('td')
-    deleteCell.textContent = 'Delete'
-    rows.appendChild(deleteCell)
 
-    function removeNewBook() {
-        table.removeChild(rows)
-    }
-    deleteCell.addEventListener('click', removeNewBook)
 }
 
-button.addEventListener('click', newBooksInLibrary)
 button.addEventListener('click', newBookLog)
