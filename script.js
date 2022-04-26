@@ -5,6 +5,7 @@ let pages = document.querySelector('#pages')
 let table = document.querySelector('table')
 
 let storedBooks = []
+let newBooks = []
 
 function Book(bookName, bookAuthor, bookPages) {
     this.bookName = bookName
@@ -34,7 +35,14 @@ function bookLog() {
             rows.appendChild(cell)
         }
         
+        let deleteCell = document.createElement('td')
+        deleteCell.textContent = 'Delete'
+        rows.appendChild(deleteCell)
 
+        function removeBook() {
+            table.removeChild(rows)
+        }
+        deleteCell.addEventListener('click', removeBook)
     }
 
 }
@@ -43,4 +51,30 @@ booksInLibrary()
 bookLog()
 
 
-console.log(storedBooks)
+function newBooksInLibrary() {
+    let latestBook = new Book(title.value, author.value, pages.value)
+
+    newBooks.push(latestBook)
+}
+
+function newBookLog() {
+    let rows = document.createElement('tr')
+    table.appendChild(rows)
+    for (let i = 0; i <= 2; i++) {
+        let cell = document.createElement('td')
+        cell.textContent = newBooks[newBooks.length - 1]['info'][i]
+        rows.appendChild(cell)
+    }
+
+    let deleteCell = document.createElement('td')
+    deleteCell.textContent = 'Delete'
+    rows.appendChild(deleteCell)
+
+    function removeNewBook() {
+        table.removeChild(rows)
+    }
+    deleteCell.addEventListener('click', removeNewBook)
+}
+
+button.addEventListener('click', newBooksInLibrary)
+button.addEventListener('click', newBookLog)
