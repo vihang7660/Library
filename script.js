@@ -1,11 +1,13 @@
-let button = document.querySelector('button')
+let submitButton = document.querySelector('.submit')
 let title = document.querySelector('#title')
 let author = document.querySelector('#author')
 let pages = document.querySelector('#pages')
 let table = document.querySelector('table')
-
+let form = document.querySelector('.form')
+let addButton = document.querySelector('.add')
 let storedBooks = []
 let newBooks = []
+let x = 6
 
 function Book(bookName, bookAuthor, bookPages) {
     this.bookName = bookName
@@ -34,10 +36,24 @@ function bookLog() {
             cell.textContent = storedBooks[i]['info'][m]
             rows.appendChild(cell)
         }
-        
-        let deleteCell = document.createElement('td')
-        deleteCell.textContent = 'Delete'
+        let toggleCell = document.createElement('td')
+        rows.appendChild(toggleCell)
+
+        let label = document.createElement('label')
+        label.setAttribute('for', `${i}`)
+        label.textContent = 'Read'
+        toggleCell.appendChild(label)
+        let toggle = document.createElement('input')
+        toggle.setAttribute('type', 'checkbox')
+        toggle.setAttribute('name', 'readOrNot')
+        toggle.setAttribute('id', `${i}`)
+        toggleCell.appendChild(toggle)
+
+        let deleteCell = document.createElement('div')
+        let picture = document.createElement('img')
         rows.appendChild(deleteCell)
+        deleteCell.appendChild(picture)
+        picture.src = './icons/delete.png'
 
         function removeBook() {
             table.removeChild(rows)
@@ -74,10 +90,26 @@ function newBookLog() {
             cell.textContent = newBooks[newBooks.length - 1]['info'][i]
             rows.appendChild(cell)
         }
-    
-        let deleteCell = document.createElement('td')
-        deleteCell.textContent = 'Delete'
+        let toggleCell = document.createElement('td')
+        rows.appendChild(toggleCell)
+
+        let label = document.createElement('label')
+        label.setAttribute('for', `${x}`)
+        label.textContent = 'Read'
+        toggleCell.appendChild(label)
+        let toggle = document.createElement('input')
+        toggle.setAttribute('type', 'checkbox')
+        toggle.setAttribute('name', 'readOrNot')
+        toggle.setAttribute('id', `${x}`)
+        toggleCell.appendChild(toggle)
+        x = x + 1
+
+
+        let deleteCell = document.createElement('div')
+        let picture = document.createElement('img')
         rows.appendChild(deleteCell)
+        deleteCell.appendChild(picture)
+        picture.src = './icons/delete.png'
     
         function removeNewBook() {
             table.removeChild(rows)
@@ -88,4 +120,17 @@ function newBookLog() {
 
 }
 
-button.addEventListener('click', newBookLog)
+function hideForm() {
+    form.style.display = 'none'
+}
+
+submitButton.addEventListener('click', newBookLog)
+submitButton.addEventListener('click', hideForm)
+
+
+function showForm() {
+    form.style.display = 'block'
+}
+
+addButton.addEventListener('click', showForm)
+
